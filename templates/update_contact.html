@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Contact</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Contact</h1>
+        <form method="POST" id="update-contact-form">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ contact.name }}"><br>
+            <span class="error-message" id="name-error"></span>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ contact.email }}"><br>
+            <span class="error-message" id="email-error"></span>
+
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" value="{{ contact.subject }}"><br>
+            <span class="error-message" id="subject-error"></span>
+
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message">{{ contact.message }}</textarea><br>
+            <span class="error-message" id="message-error"></span>
+
+            <input type="submit" value="Update Contact">
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('update-contact-form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Perform your form validation here
+            let isValid = true;
+
+            // Example validation - check if name field is empty
+            const nameInput = document.getElementById('name');
+            const nameError = document.getElementById('name-error');
+
+            if (nameInput.value.trim() === '') {
+                nameError.innerText = 'Name is required';
+                isValid = false;
+            } else {
+                nameError.innerText = '';
+            }
+
+            // Add more validation for other fields as needed
+
+            // If form is valid, submit it
+            if (isValid) {
+                form.submit();
+            }
+        });
+    </script>
+</body>
+</html>

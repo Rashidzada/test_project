@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Contact form API</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Add custom styles here if needed */
+        /* Avoid inline styles and use Tailwind utility classes for styling */
+    </style>
+</head>
+<body>
+    <nav class="bg-gray-800 py-4">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <a href="/" class="text-white text-lg font-bold">
+                        <i class="fas fa-home"></i> My App
+                    </a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="/" class="text-white">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="#" class="text-white">
+                        <i class="fas fa-address-book"></i> Contacts
+                    </a>
+                    <a href="#" class="text-white">
+                        <i class="fas fa-info-circle"></i> About
+                    </a>
+                    <!-- Add more navigation links with icons as needed -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 mt-8">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold">Contacts</h1>
+            <a href="{% url 'contact' %}" class="flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                <i class="fas fa-plus-circle"></i> Add Contact
+            </a>
+        </div>
+        
+        <div class="contact-container">
+            {% for contact in contacts %}
+                <div class="contact-item border-b border-gray-200 py-4">
+                    <h2 class="text-lg font-bold">{{ contact.name }}</h2>
+                    <p>Id: <strong>{{contact.id}}</strong></p>
+                    <p>Email: {{ contact.email }}</p>
+                    <p>Subject: {{ contact.subject }}</p>
+                    <p>Message: {{ contact.message }}</p>
+                    <div class="mt-4">
+                        {% if contact.id %}
+                            <a href="{% url 'update_contact' contact.id %}" class="btn bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mr-2">
+                                <i class="fas fa-edit"></i> Update Contact
+                            </a>
+                            <a href="{% url 'delete_contact' contact.id %}" class="btn bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+                                <i class="fas fa-trash-alt"></i> Delete Contact
+                            </a>
+                        {% else %}
+                            <span class="btn-disabled px-4 py-2 rounded-md">Update Contact</span>
+                            <span class="btn-disabled px-4 py-2 rounded-md">Delete Contact</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
